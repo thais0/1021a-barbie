@@ -1,0 +1,36 @@
+*{
+    margin: 0px;
+ }
+footer{
+    display: flex;
+    background-color:lightpink;
+    justify-content: space-between;
+    position: fixed;
+    bottom: 0px;
+    align-items: center;
+    width: 100vw;
+}
+.lg{
+    padding: 0px 8vw;
+    color: rgb(238, 104, 178);
+    font-size: 35px;
+}
+footer div{
+    display: flex;
+    list-style: none;
+    gap: 20px;
+    margin-right: 360px;
+}
+footer ul{
+    list-style: none;
+}
+footer ul h1{
+    display: flex;
+    list-style: none;
+    color: white;
+}
+footer ul li a{
+    text-decoration: none;
+    color: white;
+    list-style: none;
+}
