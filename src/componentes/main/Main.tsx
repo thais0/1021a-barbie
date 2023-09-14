@@ -23,7 +23,7 @@ export default function Main(){
               },
               {  
                    id:2,
-                   titulo:'Barbie',
+                   titulo:'Ken',
                    sinopse:'Depois de ser expulsa da Barbieland por ser uma boneca de aparência menos do que perfeita, Barbie parte para o mundo humano em busca da verdadeira felicidade.',
                    imagem:'/ken.png'
               },
@@ -50,9 +50,14 @@ export default function Main(){
               <p>Resultados Para: {texto}</p>:""
             }
         </div>
-        {/** */}
+        {/** Use algo do vetor para tentar criar os filmes */}
+        {
+              filmes.filter((filme)=>filme.titulo.toLowerCase().includes(texto)).map((filme)=><Filme key={filme.id} sinopse={filme.sinopse} titulo={filme.titulo} imagem={filme.imagem}/>)
+        }
+
+
         <main className="content-main">
-            <Filme titulo='Barbie'
+            {/**<Filme titulo='Barbie'
                    sinopse='Depois de ser expulsa da Barbieland por ser uma boneca de aparência menos do que perfeita, Barbie parte para o mundo humano em busca da verdadeira felicidade.'
                    imagem='/barbie.png'/>
             <Filme titulo='Barbie'
@@ -63,9 +68,6 @@ export default function Main(){
                    imagem='/ken.png'/>
             <Filme titulo='Barbie'
                    sinopse='Depois de ser expulsa da Barbieland por ser uma boneca de aparência menos do que perfeita, Barbie parte para o mundo humano em busca da verdadeira felicidade.'
-                   imagem='/frozen.jpeg'/>
-            <Filme titulo='Barbie'
-                   sinopse='Depois de ser expulsa da Barbieland por ser uma boneca de aparência menos do que perfeita, Barbie parte para o mundo humano em busca da verdadeira felicidade.'
                    imagem='/barbie.png'/>
             <Filme titulo='Barbie'
                    sinopse='Depois de ser expulsa da Barbieland por ser uma boneca de aparência menos do que perfeita, Barbie parte para o mundo humano em busca da verdadeira felicidade.'
@@ -76,6 +78,9 @@ export default function Main(){
             <Filme titulo='Barbie'
                    sinopse='Depois de ser expulsa da Barbieland por ser uma boneca de aparência menos do que perfeita, Barbie parte para o mundo humano em busca da verdadeira felicidade.'
                    imagem='/barbie.png'/>
+            <Filme titulo='Barbie'
+                   sinopse='Depois de ser expulsa da Barbieland por ser uma boneca de aparência menos do que perfeita, Barbie parte para o mundo humano em busca da verdadeira felicidade.'
+                   imagem='/barbie.png'/>*/}
         </main>
         </>
     )
