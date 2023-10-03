@@ -18,7 +18,7 @@ function Header(){
                         <LinkNav url="/sobre" texto='Sobre'/>
                     </li>
                     <li>
-                        <LinkNav url="/contato" texto='Contatos'/>
+                        <LinkNav url="/contato" texto='Contato'/>
                     </li>
                 </ul>
             </nav>
