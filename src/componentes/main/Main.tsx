@@ -1,88 +1,60 @@
-import axios from 'axios'
-import { useState } from 'react'
-import Filme from './../filme/Filme'
-import './Main.css'
+import { useState, useEffect } from 'react';
+import Filme from './../filme/Filme';
+import axios from 'axios';
+import './Main.css';
+
 type FilmeType = {
-       id:number,
-       titulo:string,
-       sinopse:string,
-       imagem:string
-   }
+  id: number;
+  titulo: string;
+  descricao: string;
+  foto: string;
+};
 
-export default function Main(){
-       //let texto = 'Barbie'
-       //Hooks são funções do React que ajudam a gente a fazer tarefas específicas
-       const [texto,setTexto]=useState("Barbie")
-       //O parâmetro "e" da minha função será o meu evento que ocorreu
+export default function Main() {
+  const [texto, setTexto] = useState('');
+  const [dados, setDados] = useState<FilmeType[]>([]);
 
-       const filmes:FilmeType[] = [
-              {
-                   id:1,
-                   titulo:'Barbie',
-                   sinopse:'Depois de ser expulsa da Barbieland por ser uma boneca de aparência menos do que perfeita, Barbie parte para o mundo humano em busca da verdadeira felicidade.',
-                   imagem:'/barbie.png'
-              },
-              {  
-                   id:2,
-                   titulo:'Ken',
-                   sinopse:'Depois de ser expulsa da Barbieland por ser uma boneca de aparência menos do que perfeita, Barbie parte para o mundo humano em busca da verdadeira felicidade.',
-                   imagem:'/ken.png'
-              },
-              {
-                   id:3,
-                   titulo:'Barbie',
-                   sinopse:'Depois de ser expulsa da Barbieland por ser uma boneca de aparência menos do que perfeita, Barbie parte para o mundo humano em busca da verdadeira felicidade.',
-                   imagem:'/boneca-linda-garota-gerada-por-ai.jpg'
-              }
-       ]
+  useEffect(() => {
+    const procurarFilmes = async () => {
+      try {
+        const resposta = await axios.get('http://localhost:3000/filmes');
+        setDados(resposta.data);
+      } catch (erro) {
+        console.error('Erro ao buscar filmes:', erro);
+      }
+    };
 
-       function TrataTexto(e:React.ChangeEvent<HTMLInputElement>){
-              //console.log(e.target.value)
-              //Como eu faço para mudar o texto para "TERE"
-              setTexto (e.target.value)
-       }
-    return(
-        <>
-        <div className='campo_pesquisa'>
-            <p>Busque um filme</p>
-            <input type="text" className='botao_pesquisa' placeholder='Pesquise um Filme' onChange={TrataTexto}/>
-            {
-              (texto)?
-              <p>Resultados Para: {texto}</p>:""
-            }
-        </div>
-        {/** Use algo do vetor para tentar criar os filmes */}
-        {
-              filmes.filter((filme)=>filme.titulo.toLowerCase().includes(texto)).map((filme)=><Filme key={filme.id} sinopse={filme.sinopse} titulo={filme.titulo} imagem={filme.imagem}/>)
-        }
+    procurarFilmes(); // Chame a função aqui
+  }, []); // Adicione as dependências (no caso, um array vazio)
 
+  function TrataTexto(e: React.ChangeEvent<HTMLInputElement>) {
+    setTexto(e.target.value);
+  }
 
-        <main className="content-main">
-            {/**<Filme titulo='Barbie'
-                   sinopse='Depois de ser expulsa da Barbieland por ser uma boneca de aparência menos do que perfeita, Barbie parte para o mundo humano em busca da verdadeira felicidade.'
-                   imagem='/barbie.png'/>
-            <Filme titulo='Barbie'
-                   sinopse='Depois de ser expulsa da Barbieland por ser uma boneca de aparência menos do que perfeita, Barbie parte para o mundo humano em busca da verdadeira felicidade.'
-                   imagem='/boneca-linda-garota-gerada-por-ai.jpg'/>
-            <Filme titulo='Barbie'
-                   sinopse='Depois de ser expulsa da Barbieland por ser uma boneca de aparência menos do que perfeita, Barbie parte para o mundo humano em busca da verdadeira felicidade.'
-                   imagem='/ken.png'/>
-            <Filme titulo='Barbie'
-                   sinopse='Depois de ser expulsa da Barbieland por ser uma boneca de aparência menos do que perfeita, Barbie parte para o mundo humano em busca da verdadeira felicidade.'
-                   imagem='/barbie.png'/>
-            <Filme titulo='Barbie'
-                   sinopse='Depois de ser expulsa da Barbieland por ser uma boneca de aparência menos do que perfeita, Barbie parte para o mundo humano em busca da verdadeira felicidade.'
-                   imagem='/barbie.png'/>
-            <Filme titulo='Barbie'
-                   sinopse='Depois de ser expulsa da Barbieland por ser uma boneca de aparência menos do que perfeita, Barbie parte para o mundo humano em busca da verdadeira felicidade.'
-                   imagem='/barbie.png'/>
-            <Filme titulo='Barbie'
-                   sinopse='Depois de ser expulsa da Barbieland por ser uma boneca de aparência menos do que perfeita, Barbie parte para o mundo humano em busca da verdadeira felicidade.'
-                   imagem='/barbie.png'/>
-            <Filme titulo='Barbie'
-                   sinopse='Depois de ser expulsa da Barbieland por ser uma boneca de aparência menos do que perfeita, Barbie parte para o mundo humano em busca da verdadeira felicidade.'
-                   imagem='/barbie.png'/>*/}
-        </main>
-        </>
-    )
+  return (
+    <>
+      <div className="pesquisar">
+        <input
+          type="text"
+          className="botao-pesquisa"
+          placeholder="Pesquise um filme"
+          onChange={TrataTexto}
+        />
+        {texto && <p>Resultados para: {texto}</p>}
+      </div>
+
+      <main className="content-main">
+        {dados
+          .filter((filme) => filme.titulo.toLowerCase().includes(texto))
+          .map((filme) => (
+            <Filme
+              key={filme.id}
+              descricao={filme.descricao}
+              titulo={filme.titulo}
+              foto={filme.foto}
+            />
+          ))}
+      </main>
+    </>
+  );
 }
